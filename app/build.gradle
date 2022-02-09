@@ -4,7 +4,7 @@ plugins {
 
 android {
     compileSdkVersion 32
-    buildToolsVersion '31.0.0'
+    buildToolsVersion '32.0.0'
 
     defaultConfig {
         applicationId "com.sbitbd.alhelalattendance"
@@ -29,6 +29,7 @@ android {
     buildFeatures {
         viewBinding true
     }
+    ndkVersion '23.1.7779620'
 }
 
 dependencies {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_round_dashboard_24"
+            android:title="@string/dashboard" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_verified_user"
+            android:title="@string/present_student" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_absent"
+            android:title="@string/absent_student" />
+        <item
+            android:id="@+id/nav_all_student"
+            android:icon="@drawable/ic_baseline_supervised_user_circle_24"
+            android:title="@string/view_all_students" />
+        <item
+            android:id="@+id/nav_offline"
+            android:icon="@drawable/ic_baseline_public_off_24"
+            android:title="@string/offline_attend" />
+        <item
+            android:id="@+id/nav_online"
+            android:icon="@drawable/ic_round_signal_wifi_statusbar_4_bar_24"
+            android:title="@string/online_attendance"/>
+
+        <item
+            android:id="@+id/nav_teacher"
+            android:icon="@drawable/ic_verified_user"
+            android:title="@string/teacher_attendance" />
+        <item
+            android:id="@+id/nav_teacher_gap"
+            android:icon="@drawable/ic_round_attribution_24"
+            android:title="@string/teacher_gap" />
+        <item
+            android:id="@+id/nav_website"
+            android:icon="@drawable/ic_baseline_web_24"
+            android:title="@string/website" />
+    </group>
+</menu>

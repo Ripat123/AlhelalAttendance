@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/volkhov_bold"
+                android:text="@string/app_name"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"
+                android:src="@drawable/ic_my_password_rafiki"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView12" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_lay"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/phone"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeWidth="0dp"
+                app:endIconMode="clear_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView"
+                app:startIconDrawable="@drawable/ic_round_contact_mail_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edittext"
+                    android:inputType="phone"
+                    android:selectAllOnFocus="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pass_lay"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:hint="@string/password"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeWidth="0dp"
+                app:endIconMode="password_toggle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/email_lay"
+                app:startIconDrawable="@drawable/ic_round_lock_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pass"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edittext"
+                    android:inputType="textPassword"
+                    android:selectAllOnFocus="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/materialCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remember_password"
+                android:textColor="@color/main_color"
+                app:layout_constraintStart_toStartOf="@+id/pass_lay"
+                app:layout_constraintTop_toBottomOf="@+id/pass_lay" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/login"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/deep_main"
+                android:paddingVertical="11dp"
+                android:text="@string/login"
+                android:textStyle="bold"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/ic_round_login_24"
+                app:layout_constraintEnd_toEndOf="@+id/pass_lay"
+                app:layout_constraintStart_toStartOf="@+id/pass_lay"
+                app:layout_constraintTop_toBottomOf="@+id/materialCheckBox" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/materialTextView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/volkhov_bold"
+                android:text="@string/don_t_have_an_account"
+                android:textAlignment="textStart"
+                app:layout_constraintTop_toTopOf="@+id/forgot"
+                app:layout_constraintEnd_toStartOf="@+id/forgot"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintBottom_toBottomOf="@+id/forgot"
+                app:layout_constraintStart_toStartOf="@+id/login" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/forgot"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/forgot_password"
+                app:layout_constraintBottom_toBottomOf="@+id/materialTextView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/materialTextView2"
+                app:layout_constraintTop_toBottomOf="@+id/login" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/reg"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/soft_main"
+                android:paddingVertical="11dp"
+                android:text="@string/registration"
+                android:textColor="@color/deep_main"
+                android:textStyle="bold"
+                app:cornerRadius="10dp"
+                app:icon="@drawable/ic_round_how_to_reg_24"
+                app:iconTint="@color/deep_main"
+                app:layout_constraintEnd_toEndOf="@+id/login"
+                app:layout_constraintStart_toStartOf="@+id/login"
+                app:layout_constraintTop_toBottomOf="@+id/forgot"
+                app:rippleColor="@color/deep_main" />
+
+            <ProgressBar
+                android:id="@+id/progress_l"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

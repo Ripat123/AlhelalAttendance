@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2203125" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/drawable/ic_round_local_phone_24.xml" value="0.2203125" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/absent_card.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_absent_view.xml" value="0.18342391304347827" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_attend.xml" value="0.18" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_class_view.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_download.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_forget_code.xml" value="0.18" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_present_view.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_registration.xml" value="0.25" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_settings.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_student_details.xml" value="0.25" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_teacher_attend.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_teacher_page.xml" value="0.21" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_update_attendance.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_update_view.xml" value="0.2" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_verify.xml" value="0.33" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/activity_website.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/app_bar_main.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/class_card.xml" value="0.18" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/content_main.xml" value="0.17889492753623187" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/forgot_phone.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/fragment_all_student.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/fragment_offline_attend.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/fragment_slideshow.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/fragment_teacher_attend.xml" value="0.25" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/fragment_teacher_gap.xml" value="0.1743659420289855" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/item_name.xml" value="0.17889492753623187" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/notification.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/offline_item.xml" value="0.25" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/present_card.xml" value="0.25" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/present_st_card.xml" value="0.2" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/recycle.xml" value="0.12545289855072464" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/teacher_atd_card.xml" value="0.25" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/teacher_attend_card.xml" value="0.25" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/teacher_card.xml" value="0.33" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/textfield.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/textfield1.xml" value="0.1" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/textfield2.xml" value="0.18" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/textfield3.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/textfield4.xml" value="0.15" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/textfield5.xml" value="0.22" />
+        <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

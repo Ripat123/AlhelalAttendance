@@ -119,6 +119,10 @@ public class config {
         return false;
     }
 
+    public static String channelName(String myUid, String peerUid) {
+        return myUid + peerUid;
+    }
+
     public user_model User_info(Context context) {
         database sqliteDB = new database(context);
         try {

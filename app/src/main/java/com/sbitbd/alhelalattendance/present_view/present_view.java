@@ -47,6 +47,7 @@ import com.sbitbd.alhelalattendance.Model.attend_model;
 import com.sbitbd.alhelalattendance.Model.attend_task_model;
 import com.sbitbd.alhelalattendance.Model.user_model;
 import com.sbitbd.alhelalattendance.R;
+import com.sbitbd.alhelalattendance.activity.BaseCallActivity;
 import com.sbitbd.alhelalattendance.attend_form.attend;
 import com.sbitbd.alhelalattendance.teacher_page.teacher_page;
 import com.sbitbd.alhelalattendance.ui.home.HomeViewModel;
@@ -56,7 +57,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class present_view extends AppCompatActivity {
+import io.agora.rtm.RtmChannelMember;
+import io.agora.rtm.RtmClient;
+import io.agora.rtm.RtmFileMessage;
+import io.agora.rtm.RtmImageMessage;
+
+public class present_view extends BaseCallActivity {
 
     private RecyclerView recyclerView;
     private present_adapter present_adapter;
@@ -74,7 +80,7 @@ public class present_view extends AppCompatActivity {
     private Button date_btn;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_present_view);
         initview();
@@ -143,7 +149,7 @@ public class present_view extends AppCompatActivity {
 
                     }
                 });
-                teacher_adpter = new teacher_adpter(present_view.this, 1);
+                teacher_adpter = new teacher_adpter(present_view.this, 1,this);
                 homeViewModel.get_teacher(present_view.this, teacher_adpter,"");
 
                 recyclerView.setAdapter(teacher_adpter);
@@ -159,7 +165,7 @@ public class present_view extends AppCompatActivity {
 //
 //                    }
 //                });
-                teacher_adpter = new teacher_adpter(present_view.this, 0);
+                teacher_adpter = new teacher_adpter(present_view.this, 0,this);
                 homeViewModel.get_student(present_view.this, teacher_adpter, id,section_id,"");
 
                 recyclerView.setAdapter(teacher_adpter);
@@ -291,6 +297,11 @@ public class present_view extends AppCompatActivity {
         }
     }
 
+    @Override
+    public RtmClient rtmClient() {
+        return application().rtmClient();
+    }
+
     private static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -350,6 +361,15 @@ public class present_view extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onImageMessageReceived(RtmImageMessage rtmImageMessage, RtmChannelMember rtmChannelMember) {
+
+    }
+
+    @Override
+    public void onFileMessageReceived(RtmFileMessage rtmFileMessage, RtmChannelMember rtmChannelMember) {
+
+    }
 
 
     private class Attend_Start extends AsyncTask<attend_task_model, String, attend_adapter> {

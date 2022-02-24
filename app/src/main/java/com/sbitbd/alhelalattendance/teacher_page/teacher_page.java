@@ -35,6 +35,7 @@ import com.sbitbd.alhelalattendance.Config.config;
 import com.sbitbd.alhelalattendance.Config.database;
 import com.sbitbd.alhelalattendance.Model.attend_model;
 import com.sbitbd.alhelalattendance.R;
+import com.sbitbd.alhelalattendance.activity.BaseCallActivity;
 import com.sbitbd.alhelalattendance.present_view.present_view;
 
 import org.json.JSONArray;
@@ -45,7 +46,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class teacher_page extends AppCompatActivity {
+import io.agora.rtm.RtmChannelMember;
+import io.agora.rtm.RtmClient;
+import io.agora.rtm.RtmFileMessage;
+import io.agora.rtm.RtmImageMessage;
+
+public class teacher_page extends BaseCallActivity {
 
     private ImageView back;
     private TextView total,title_t,bottom_title,date_t;
@@ -57,7 +63,7 @@ public class teacher_page extends AppCompatActivity {
     private MaterialCardView view_date_card;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_teacher_page);
         initveiw();
@@ -87,7 +93,7 @@ public class teacher_page extends AppCompatActivity {
                     finish();
                 }
             });
-            teacher_adpter = new teacher_adpter(teacher_page.this, 1);
+            teacher_adpter = new teacher_adpter(teacher_page.this, 1,this);
 
             view_date_card.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -199,6 +205,11 @@ public class teacher_page extends AppCompatActivity {
         }
     }
 
+    @Override
+    public RtmClient rtmClient() {
+        return application().rtmClient();
+    }
+
     private void get_leave(Context context, String sql, teacher_adpter teacher_atd_adapter) {
         try {
             progressDialog = ProgressDialog.show(teacher_page.this,"","Loading...",false,false);
@@ -279,5 +290,15 @@ public class teacher_page extends AppCompatActivity {
             } catch (Exception e) {
             }
         }
+    }
+
+    @Override
+    public void onImageMessageReceived(RtmImageMessage rtmImageMessage, RtmChannelMember rtmChannelMember) {
+
+    }
+
+    @Override
+    public void onFileMessageReceived(RtmFileMessage rtmFileMessage, RtmChannelMember rtmChannelMember) {
+
     }
 }

@@ -21,6 +21,7 @@ import com.sbitbd.alhelalattendance.Config.database;
 import com.sbitbd.alhelalattendance.Model.class_model;
 import com.sbitbd.alhelalattendance.Model.four_model;
 import com.sbitbd.alhelalattendance.Model.user_model;
+import com.sbitbd.alhelalattendance.activity.BaseCallActivity;
 import com.sbitbd.alhelalattendance.attend_form.attend;
 import com.sbitbd.alhelalattendance.network_listener.ApplicationListener;
 import com.sbitbd.alhelalattendance.network_listener.ConnectivityReceiver;
@@ -39,7 +40,11 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Dashboard extends AppCompatActivity {
+import io.agora.rtm.RtmChannelMember;
+import io.agora.rtm.RtmFileMessage;
+import io.agora.rtm.RtmImageMessage;
+
+public class Dashboard extends BaseCallActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private MenuItem web,online,teacher,teacher_gap;
@@ -54,7 +59,7 @@ public class Dashboard extends AppCompatActivity {
     private dashboard_controller dashboard_controller = new dashboard_controller();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -350,4 +355,13 @@ public class Dashboard extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onImageMessageReceived(RtmImageMessage rtmImageMessage, RtmChannelMember rtmChannelMember) {
+
+    }
+
+    @Override
+    public void onFileMessageReceived(RtmFileMessage rtmFileMessage, RtmChannelMember rtmChannelMember) {
+
+    }
 }

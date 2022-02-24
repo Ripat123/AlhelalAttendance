@@ -14,4 +14,8 @@
     <color name="soft_main">#26673AB7</color>
     <color name="red">#C50000</color>
     <color name="green">#39A83E</color>
+    <color name="blue">#3F51B5</color>
+    <color name="pink">#EE36F4</color>
+    <color name="pink_dark">#A400D1</color>
+    <color name="yellow">#FFC107</color>
 </resources>

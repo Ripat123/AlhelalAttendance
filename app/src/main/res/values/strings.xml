@@ -103,4 +103,23 @@
     <string name="download_subject_priority">Download Subject Priority</string>
     <string name="update">Update</string>
     <string name="view_all">View All</string>
+
+    <string name="agora_app_id" translatable="false">897cdb3a3b4a4d06bf002959d7528c3c</string>
+    <string name="agora_app_certificate" translatable="false">81777ac9ee5a435381091df3666b125a</string>
+    <string name="channelName">fci_ch</string>
+    <string name="receiving_call">Incoming&#8230;</string>
+    <string name="calling_out">Calling&#8230;</string>
+    <string name="peer_not_online">Peer has not logged on</string>
+    <string name="need_necessary_permissions">Necessary permissions acquired</string>
+    <string name="make_onine_call">Make Online Audio Call</string>
+    <string name="make_offline_call">Make Offline Call</string>
+    <string name="make_online_video_call">Make Online Video Call</string>
+    <string name="message_wrong_number">Wrong Peer number</string>
+    <string name="str_send">SEND</string>
+    <string name="single_input">Single Line Input</string>
+    <string name="channel_title">%s(%d)</string>
+    <string name="join_channel_failed">Join Channel Failed</string>
+    <string name="message_cached">Message cached by server</string>
+    <string name="peer_offline">Peer is Offline</string>
+    <string name="send_msg_failed">Send message failed</string>
 </resources>

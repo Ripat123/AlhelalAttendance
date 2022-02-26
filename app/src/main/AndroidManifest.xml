@@ -31,6 +31,8 @@
         <activity
             android:name=".ui.audio_call.audio_call"
             android:exported="false" />
+        <activity android:name=".activity.CallActivity"
+            android:exported="true"/>
         <activity
             android:name=".update_view.update_view"
             android:exported="false"

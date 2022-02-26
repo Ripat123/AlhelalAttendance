@@ -106,7 +106,7 @@
 
     <string name="agora_app_id" translatable="false">897cdb3a3b4a4d06bf002959d7528c3c</string>
     <string name="agora_app_certificate" translatable="false">81777ac9ee5a435381091df3666b125a</string>
-    <string name="channelName">fci_ch</string>
+    <string name="channelName">alhelal_ch</string>
     <string name="receiving_call">Incoming&#8230;</string>
     <string name="calling_out">Calling&#8230;</string>
     <string name="peer_not_online">Peer has not logged on</string>

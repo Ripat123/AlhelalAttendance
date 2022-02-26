@@ -180,7 +180,7 @@ public class OpenDuoApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-//        destroyEngine();
+        //destroyEngine();
     }
 
     private void destroyEngine() {

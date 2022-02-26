@@ -132,18 +132,18 @@ public class OpenDuoApplication extends Application {
             });
             // rtm login for chat manager.
 //            mChatManager = AGApplication.the().getChatManager();
-            mRtmClient_chat = mChatManager.getRtmClient();
-            mRtmClient_chat.login(result, userId, new ResultCallback<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.i(TAG, "rtm client login success");
-                }
-
-                @Override
-                public void onFailure(ErrorInfo errorInfo) {
-                    Log.i(TAG, "rtm client login failed:" + errorInfo.getErrorDescription());
-                }
-            });
+//            mRtmClient_chat = mChatManager.getRtmClient();
+//            mRtmClient_chat.login(result, userId, new ResultCallback<Void>() {
+//                @Override
+//                public void onSuccess(Void aVoid) {
+//                    Log.i(TAG, "rtm client login success");
+//                }
+//
+//                @Override
+//                public void onFailure(ErrorInfo errorInfo) {
+//                    Log.i(TAG, "rtm client login failed:" + errorInfo.getErrorDescription());
+//                }
+//            });
         } catch (Exception e) {
             e.printStackTrace();
         }

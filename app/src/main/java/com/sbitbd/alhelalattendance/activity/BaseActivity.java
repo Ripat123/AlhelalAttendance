@@ -117,7 +117,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IEventLi
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        removeEventListener(this);
+//        removeEventListener(this);
     }
 
     @Override

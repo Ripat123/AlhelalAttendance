@@ -1,7 +1,9 @@
 package com.sbitbd.alhelalattendance;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +31,10 @@ import com.sbitbd.alhelalattendance.settings.settings;
 import com.sbitbd.alhelalattendance.ui.update_attendance.update_attendance;
 import com.sbitbd.alhelalattendance.website.website;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -57,6 +63,21 @@ public class Dashboard extends BaseCallActivity {
     private List<String> period_name = new ArrayList<>();
     private String class_id, section_id, period_id;
     private dashboard_controller dashboard_controller = new dashboard_controller();
+    private static final int PERMISSION_REQ_FORWARD = 1 << 4;
+
+    // Permission request when we want to stay in
+    // current activity even if all permissions are granted.
+    private static final int PERMISSION_REQ_STAY = 1 << 3;
+
+    private String[] PERMISSIONS = {
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.CAMERA,
+            Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.READ_CALL_LOG,
+            Manifest.permission.WRITE_CALL_LOG
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -169,7 +190,7 @@ public class Dashboard extends BaseCallActivity {
             teacher.setVisible(false);
             teacher_gap.setVisible(false);
         }
-
+        checkPermissions();
 //        check_offline_data_upload();
 
     }
@@ -339,20 +360,72 @@ public class Dashboard extends BaseCallActivity {
         }
     }
 
+    private void checkPermissions() {
+        if (!permissionArrayGranted(null)) {
+            requestPermissions(PERMISSION_REQ_STAY);
+        }
+    }
+
+    private boolean permissionArrayGranted(@Nullable String[] permissions) {
+        String[] permissionArray = permissions;
+        if (permissionArray == null) {
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+//                permissionArray = PERMISSIONS1;
+//            else
+            permissionArray = PERMISSIONS;
+        }
+
+        boolean granted = true;
+        for (String per : permissionArray) {
+            if (!permissionGranted(per)) {
+                granted = false;
+                break;
+            }
+        }
+        return granted;
+    }
+
+    private void requestPermissions(int request) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R)
+//            ActivityCompat.requestPermissions(this, PERMISSIONS1, request);
+//        else
+        ActivityCompat.requestPermissions(this, PERMISSIONS, request);
+    }
+
+    private boolean permissionGranted(String permission) {
+        return ContextCompat.checkSelfPermission(
+                this, permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQ_FORWARD ||
+                requestCode == PERMISSION_REQ_STAY) {
+            boolean granted = permissionArrayGranted(permissions);
+            if (!granted) {
+                toastNeedPermissions();
+            }
+        }
+    }
+    private void toastNeedPermissions() {
+        Toast.makeText(this, R.string.need_necessary_permissions, Toast.LENGTH_LONG).show();
+    }
+
 //    @Override
 //    protected void onStart() {
 //        super.onStart();
 //        check_offline_data_upload();
 //    }
 
-    private void check_offline_data_upload(){
-        try {
-            if (config.isOnline(Dashboard.this)){
-                dashboard_controller.get_offline_attend(Dashboard.this);
-            }
-        }catch (Exception e){
-        }
-    }
+//    private void check_offline_data_upload(){
+//        try {
+//            if (config.isOnline(Dashboard.this)){
+//                dashboard_controller.get_offline_attend(Dashboard.this);
+//            }
+//        }catch (Exception e){
+//        }
+//    }
 
 
     @Override

@@ -199,6 +199,7 @@ public class CallActivity extends BaseCallActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.accept_call_btn:
                 answerCall(global().getRemoteInvitation());
+                finish();
                 break;
             case R.id.hang_up_btn:
                 if (isCaller()) {

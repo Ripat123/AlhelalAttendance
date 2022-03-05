@@ -216,8 +216,8 @@ public abstract class BaseCallActivity extends BaseRtcActivity implements RtmCha
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//    }
 }

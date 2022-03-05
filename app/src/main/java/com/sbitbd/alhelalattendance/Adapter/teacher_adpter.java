@@ -250,45 +250,38 @@ public class teacher_adpter extends RecyclerView.Adapter<teacher_adpter.viewHold
                         Toast.LENGTH_SHORT).show();
             }
 
-            String uid = config.User_info(context1).getPhone();
-            if (uid.contains("+"))
-                uid = uid.replace("+", "");
-            String channel = config.channelName(uid, number);
-//                                String channel = activity.getString(R.string.app_name);
-            activity.gotoCallingInterface(number, channel, Constants.ROLE_CALLER, status);
+            Set<String> peerSet = new HashSet<>();
+            peerSet.add(number);
 
-//            Set<String> peerSet = new HashSet<>();
-//            peerSet.add(number);
-//
-//            activity.rtmClient().queryPeersOnlineStatus(peerSet,
-//                    new ResultCallback<Map<String, Boolean>>() {
-//                        @Override
-//                        public void onSuccess(Map<String, Boolean> statusMap) {
-//                            Boolean bOnline = statusMap.get(number);
-//                            if (bOnline != null && bOnline) {
-//                                String uid = config.User_info(context1).getPhone();
-//                                if (uid.contains("+"))
-//                                    uid = uid.replace("+", "");
-//                                String channel = config.channelName(uid, number);
-////                                String channel = activity.getString(R.string.app_name);
-//                                activity.gotoCallingInterface(number, channel, Constants.ROLE_CALLER, status);
-//                            } else {
-//                                activity.runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        Toast.makeText(context1,
-//                                                number + " is offline!",
-//                                                Toast.LENGTH_SHORT).show();
-//                                    }
-//                                });
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(ErrorInfo errorInfo) {
-//                            Log.d("ttt", errorInfo.getErrorDescription());
-//                        }
-//                    });
+            activity.rtmClient().queryPeersOnlineStatus(peerSet,
+                    new ResultCallback<Map<String, Boolean>>() {
+                        @Override
+                        public void onSuccess(Map<String, Boolean> statusMap) {
+                            Boolean bOnline = statusMap.get(number);
+                            if (bOnline != null && bOnline) {
+                                String uid = config.User_info(context1).getPhone();
+                                if (uid.contains("+"))
+                                    uid = uid.replace("+", "");
+                                String channel = config.channelName(uid, number);
+//                                String channel = activity.getString(R.string.app_name);
+                                activity.gotoCallingInterface(number, channel, Constants.ROLE_CALLER, status);
+                            } else {
+                                activity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(context1,
+                                                number + " is offline!",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(ErrorInfo errorInfo) {
+                            Log.d("ttt", errorInfo.getErrorDescription());
+                        }
+                    });
 
         }
 

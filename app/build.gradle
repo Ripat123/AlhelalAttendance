@@ -10,8 +10,8 @@ android {
         applicationId "com.sbitbd.alhelalattendance"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "4.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

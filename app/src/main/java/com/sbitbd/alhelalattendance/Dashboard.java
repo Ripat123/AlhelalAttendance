@@ -67,13 +67,11 @@ public class Dashboard extends BaseCallActivity {
 
     // Permission request when we want to stay in
     // current activity even if all permissions are granted.
-    private static final int PERMISSION_REQ_STAY = 1 << 3;
+    private static final int PERMISSION_REQ_STAY = 1 << 2;
 
     private String[] PERMISSIONS = {
             Manifest.permission.RECORD_AUDIO,
             Manifest.permission.CAMERA,
-            Manifest.permission.MANAGE_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.CALL_PHONE,
             Manifest.permission.READ_CALL_LOG,
             Manifest.permission.WRITE_CALL_LOG

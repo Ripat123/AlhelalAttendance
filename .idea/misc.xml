@@ -63,10 +63,12 @@
         <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/textfield4.xml" value="0.15" />
         <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/layout/textfield5.xml" value="0.22" />
         <entry key="..\:/Users/PC/Documents/AlhelalAttendance/app/src/main/res/menu/activity_main_drawer.xml" value="0.33" />
+        <entry key="..\:/Users/Rifat Rabbi/Documents/AlhelalAttendance/app/src/main/res/layout/activity_teacher_attend.xml" value="0.17074275362318841" />
+        <entry key="..\:/Users/Rifat Rabbi/Documents/AlhelalAttendance/app/src/main/res/layout/activity_teacher_page.xml" value="0.17074275362318841" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

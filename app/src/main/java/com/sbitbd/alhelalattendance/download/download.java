@@ -82,7 +82,7 @@ public class download extends AppCompatActivity {
             else {
                 if (config.isOnline(download.this))
                     allTask.doInBackground("2", "SELECT teachers_id AS 'one',teachers_name AS 'two',mobile_no AS 'three' " +
-                            "from teachers_information WHERE Type = 'Teacher' order by index_no ASC", config.FOUR_DIMENSION);
+                            "from teachers_information order by index_no ASC", config.FOUR_DIMENSION);
                 else
                     dialog();
             }

@@ -71,29 +71,18 @@ public class absent_view extends AppCompatActivity {
             roll.setText(getIntent().getStringExtra("roll"));
             name.setText(getIntent().getStringExtra("name"));
             sid.setText(id);
-            phone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!number.getText().toString().trim().equals("")) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:" + number.getText().toString().trim()));
-                        startActivity(intent);
-                    }
+            phone.setOnClickListener(v -> {
+                if (!number.getText().toString().trim().equals("")) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + number.getText().toString().trim()));
+                    startActivity(intent);
                 }
             });
-            info_back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                    finish();
-                }
+            info_back.setOnClickListener(v -> {
+                onBackPressed();
+                finish();
             });
-            send_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    send_sms(msg_num.getText().toString().trim(),msg.getText().toString().trim(),view);
-                }
-            });
+            send_btn.setOnClickListener(view -> send_sms(msg_num.getText().toString().trim(),msg.getText().toString().trim(),view));
             get_student_details(absent_view.this,id);
             Picasso.get().load(config.STUDENT_IMG + image).transform(new RoundedCornersTransformation(10, 0))
                     .fit().centerInside()
@@ -136,20 +125,13 @@ public class absent_view extends AppCompatActivity {
         try {
             progressDialog = ProgressDialog.show(absent_view.this,"","Sending...",false,false);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.SEND_SMS,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            progressDialog.cancel();
-                            config.regularSnak(v,"Message sent.");
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    progressDialog.cancel();
-                    Toast.makeText(absent_view.this, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    response -> {
+                        progressDialog.cancel();
+                        config.regularSnak(v,"Message sent.");
+                    }, error -> {
+                        progressDialog.cancel();
+                        Toast.makeText(absent_view.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();

@@ -32,12 +32,9 @@ public class class_view extends AppCompatActivity {
             recyclerView = findViewById(R.id.class_rec);
             back = findViewById(R.id.class_back);
 
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                    finish();
-                }
+            back.setOnClickListener(v -> {
+                onBackPressed();
+                finish();
             });
 
             GridLayoutManager manager = new GridLayoutManager(class_view.this, 2);

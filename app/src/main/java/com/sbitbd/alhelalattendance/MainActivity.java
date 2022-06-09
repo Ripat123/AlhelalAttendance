@@ -155,59 +155,53 @@ public class MainActivity extends AppCompatActivity {
 //                    finish();
                 }
             });
-            reg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, registration.class));
-                    finish();
-                }
+            reg.setOnClickListener(v -> {
+                startActivity(new Intent(MainActivity.this, registration.class));
+                finish();
             });
-            forgot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (config.isOnline(MainActivity.this)) {
-                        View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.forgot_phone, null);
-                        EditText phoneE = view.findViewById(R.id.phone_for);
-                        AutoCompleteTextView teacher = view.findViewById(R.id.teacher_f);
-                        showTeacher(teacher);
-                        teacher.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                class_model = teacher_list.get(position);
-                                teacher_id = class_model.getId();
-                            }
-                        });
-                        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(MainActivity.this,R.style.RoundShapeTheme);
-                        dialogBuilder.setTitle("Forget Password");
-                        dialogBuilder.setMessage("Select teacher and enter your phone number for a verification code");
-                        dialogBuilder.setView(view);
-                        dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
-                            forget_phone = "";
-                            dialog.cancel();
-                        });
-                        dialogBuilder.setPositiveButton("Reset", (dialog, which) -> {
-                            if (phoneE.getText().toString().equals("")) {
-                                phoneE.setError("Empty Number");
-                                Toast.makeText(MainActivity.this, "Empty Number", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            if (phoneE.getText().toString().length() < 11) {
-                                phoneE.setError("Phone Number must be 11 characters");
-                                Toast.makeText(MainActivity.this, "Phone Number must be 11 characters", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            if (teacher.getText().toString().trim().equals("")) {
-                                teacher.setError("Select Teacher");
-                                Toast.makeText(MainActivity.this, "Select Teacher", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            forget_phone = phoneE.getText().toString().trim();
-                            getCode(forget_phone, teacher_id);
-                        });
-                        dialogBuilder.show();
-                    } else
-                        Toast.makeText(MainActivity.this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
-                }
+            forgot.setOnClickListener(v -> {
+                if (config.isOnline(MainActivity.this)) {
+                    View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.forgot_phone, null);
+                    EditText phoneE = view.findViewById(R.id.phone_for);
+                    AutoCompleteTextView teacher = view.findViewById(R.id.teacher_f);
+                    showTeacher(teacher);
+                    teacher.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            class_model = teacher_list.get(position);
+                            teacher_id = class_model.getId();
+                        }
+                    });
+                    MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(MainActivity.this,R.style.RoundShapeTheme);
+                    dialogBuilder.setTitle("Forget Password");
+                    dialogBuilder.setMessage("Select teacher and enter your phone number for a verification code");
+                    dialogBuilder.setView(view);
+                    dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
+                        forget_phone = "";
+                        dialog.cancel();
+                    });
+                    dialogBuilder.setPositiveButton("Reset", (dialog, which) -> {
+                        if (phoneE.getText().toString().equals("")) {
+                            phoneE.setError("Empty Number");
+                            Toast.makeText(MainActivity.this, "Empty Number", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (phoneE.getText().toString().length() < 11) {
+                            phoneE.setError("Phone Number must be 11 characters");
+                            Toast.makeText(MainActivity.this, "Phone Number must be 11 characters", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        if (teacher.getText().toString().trim().equals("")) {
+                            teacher.setError("Select Teacher");
+                            Toast.makeText(MainActivity.this, "Select Teacher", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                        forget_phone = phoneE.getText().toString().trim();
+                        getCode(forget_phone, teacher_id);
+                    });
+                    dialogBuilder.show();
+                } else
+                    Toast.makeText(MainActivity.this, "No Internet Connection!", Toast.LENGTH_SHORT).show();
             });
         } catch (Exception e) {
         }
@@ -218,21 +212,12 @@ public class MainActivity extends AppCompatActivity {
             String sql = "SELECT teachers_id as 'one',teachers_name as 'two' FROM `teachers_information`";
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.TWO_DIMENSION,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            showTeacherList(response.trim());
-                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MainActivity.this,
-                                    R.layout.item_name, teacher_name);
-                            autoCompleteTextView.setAdapter(dataAdapter);
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    response -> {
+                        showTeacherList(response.trim());
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MainActivity.this,
+                                R.layout.item_name, teacher_name);
+                        autoCompleteTextView.setAdapter(dataAdapter);
+                    }, error -> Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show()) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
@@ -275,26 +260,19 @@ public class MainActivity extends AppCompatActivity {
         try {
             progressDialog = ProgressDialog.show(MainActivity.this, "", "Loading...", false, false);
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.FORGET,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            progressDialog.dismiss();
-                            if (!response.equals("1")) {
-                                Intent intent = new Intent(MainActivity.this, forget_code.class);
-                                intent.putExtra("phone", phone);
-                                intent.putExtra("id", teacher_id);
-                                startActivity(intent);
-                            } else
-                                Toast.makeText(MainActivity.this, "Invalid Phone", Toast.LENGTH_SHORT).show();
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    progressDialog.dismiss();
-                    Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    response -> {
+                        progressDialog.dismiss();
+                        if (!response.equals("1")) {
+                            Intent intent = new Intent(MainActivity.this, forget_code.class);
+                            intent.putExtra("phone", phone);
+                            intent.putExtra("id", teacher_id);
+                            startActivity(intent);
+                        } else
+                            Toast.makeText(MainActivity.this, "Invalid Phone", Toast.LENGTH_SHORT).show();
+                    }, error -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(MainActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
@@ -317,24 +295,17 @@ public class MainActivity extends AppCompatActivity {
         try {
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.LOGIN,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            loadingProgressBar.setVisibility(View.GONE);
-                            if (response != null && !response.trim().equals("") && !response.trim().equals("{\"result\":[]}")) {
-                                showJson(response.trim());
-                            } else {
-                                Toast.makeText(MainActivity.this, "not a verified user!", Toast.LENGTH_LONG).show();
-                            }
+                    response -> {
+                        loadingProgressBar.setVisibility(View.GONE);
+                        if (response != null && !response.trim().equals("") && !response.trim().equals("{\"result\":[]}")) {
+                            showJson(response.trim());
+                        } else {
+                            Toast.makeText(MainActivity.this, "not a verified user!", Toast.LENGTH_LONG).show();
                         }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                    loadingProgressBar.setVisibility(View.GONE);
-                }
-            }) {
+                    }, error -> {
+                        Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                        loadingProgressBar.setVisibility(View.GONE);
+                    }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();

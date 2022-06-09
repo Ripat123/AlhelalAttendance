@@ -141,16 +141,13 @@ public class present_adapter extends RecyclerView.Adapter<present_adapter.userHo
                 }
 
 
-                main_card.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context1, student_details.class);
-                        intent.putExtra("roll",attend_model.getRoll());
-                        intent.putExtra("name",attend_model.getName());
-                        intent.putExtra("image",attend_model.getImage());
-                        intent.putExtra("id",attend_model.getId());
-                        context1.startActivity(intent);
-                    }
+                main_card.setOnClickListener(v -> {
+                    Intent intent = new Intent(context1, student_details.class);
+                    intent.putExtra("roll",attend_model.getRoll());
+                    intent.putExtra("name",attend_model.getName());
+                    intent.putExtra("image",attend_model.getImage());
+                    intent.putExtra("id",attend_model.getId());
+                    context1.startActivity(intent);
                 });
 
             } catch (Exception e) {

@@ -74,12 +74,9 @@ public class teacher_attend extends AppCompatActivity {
             status = getIntent().getIntExtra("status", 1);
 
 
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                    finish();
-                }
+            back.setOnClickListener(v -> {
+                onBackPressed();
+                finish();
             });
             if (status == 1) {
                 // teacher start attend
@@ -94,24 +91,21 @@ public class teacher_attend extends AppCompatActivity {
                 teacher_leave_adapter = new teacher_leave_adapter(teacher_attend.this);
                 get_leave(teacher_attend.this, config.attend_date());
             }
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (config.isOnline(teacher_attend.this)) {
-                        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(teacher_attend.this);
-                        dialogBuilder.setTitle("Teacher Attendance");
-                        dialogBuilder.setMessage("Are you sure, you want to submit all Attendance?");
-                        dialogBuilder.setCancelable(false);
-                        dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
-                            dialog.cancel();
-                        });
-                        dialogBuilder.setPositiveButton("yes", (dialog, which) -> {
-                            submit();
-                        });
-                        dialogBuilder.show();
-                    } else
-                        config.regularSnak(v, "You must connect with internet.");
-                }
+            submit.setOnClickListener(v -> {
+                if (config.isOnline(teacher_attend.this)) {
+                    MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(teacher_attend.this);
+                    dialogBuilder.setTitle("Teacher Attendance");
+                    dialogBuilder.setMessage("Are you sure, you want to submit all Attendance?");
+                    dialogBuilder.setCancelable(false);
+                    dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
+                        dialog.cancel();
+                    });
+                    dialogBuilder.setPositiveButton("yes", (dialog, which) -> {
+                        submit();
+                    });
+                    dialogBuilder.show();
+                } else
+                    config.regularSnak(v, "You must connect with internet.");
             });
         } catch (Exception e) {
         }
@@ -128,23 +122,16 @@ public class teacher_attend extends AppCompatActivity {
         ProgressDialog progressDialog = ProgressDialog.show(context, "", "Loading...", false, false);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.ADD_ONLINE,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            progressDialog.dismiss();
-                            if (response.trim().equals("")) {
-                                Toast.makeText(context, "Submitted", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
+                    response -> {
+                        progressDialog.dismiss();
+                        if (response.trim().equals("")) {
+                            Toast.makeText(context, "Submitted", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    progressDialog.dismiss();
-                    Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    }, error -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                    }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
@@ -168,22 +155,13 @@ public class teacher_attend extends AppCompatActivity {
             String sql = "SELECT teacher_id AS 'one' from teacher_attend WHERE attend_date = " +
                     "'" + attend_date + "' and attendance = '1'";
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.TWO_DIMENSION,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            if (!response.trim().equals("")) {
-                                store_section(response.trim());
-                            } else {
-                                Toast.makeText(context, "Not found", Toast.LENGTH_LONG).show();
-                            }
+                    response -> {
+                        if (!response.trim().equals("")) {
+                            store_section(response.trim());
+                        } else {
+                            Toast.makeText(context, "Not found", Toast.LENGTH_LONG).show();
                         }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    }, error -> Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();

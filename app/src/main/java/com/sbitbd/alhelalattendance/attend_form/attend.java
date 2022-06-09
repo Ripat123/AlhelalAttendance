@@ -55,29 +55,23 @@ public class attend extends AppCompatActivity {
             section_id = getIntent().getStringExtra("section_id");
             period_id = getIntent().getStringExtra("period_id");
 
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                    finish();
-                }
+            back.setOnClickListener(v -> {
+                onBackPressed();
+                finish();
             });
-            submit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(attend.this);
-                    dialogBuilder.setTitle("Student Attendance");
-                    dialogBuilder.setMessage("Are you sure, you want to submit all Attendance?");
-                    dialogBuilder.setCancelable(false);
-                    dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
-                        dialog.cancel();
-                    });
-                    dialogBuilder.setPositiveButton("yes", (dialog, which) -> {
-                        submit();
-                    });
-                    dialogBuilder.show();
+            submit.setOnClickListener(v -> {
+                MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(attend.this);
+                dialogBuilder.setTitle("Student Attendance");
+                dialogBuilder.setMessage("Are you sure, you want to submit all Attendance?");
+                dialogBuilder.setCancelable(false);
+                dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
+                    dialog.cancel();
+                });
+                dialogBuilder.setPositiveButton("yes", (dialog, which) -> {
+                    submit();
+                });
+                dialogBuilder.show();
 
-                }
             });
             doInBackground();
 

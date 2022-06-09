@@ -132,33 +132,24 @@ public class dashboard_controller {
             config config =new config();
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, config.ADD_ONLINE,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
+                        response -> {
 
-                                if (response.trim().equals("")) {
-                                    Toast.makeText(context, "Attendance Uploaded Successful!", Toast.LENGTH_LONG).show();
-                                    config.update_online_status(context, attend_date, class_id, section_id, period_id);
-                                    if (count >= i) {
-                                        try {
-                                            AllTask allTask = new AllTask();
-                                            allTask.execute(offline_date_list.get(i).getOne(), offline_date_list.get(i).getTwo(), offline_date_list.get(i).getThree(),
-                                                    offline_date_list.get(i).getFour(), offline_date_list.get(i).getFive());
-                                            i++;
-                                        }catch (Exception e){
-                                        }
+                            if (response.trim().equals("")) {
+                                Toast.makeText(context, "Attendance Uploaded Successful!", Toast.LENGTH_LONG).show();
+                                config.update_online_status(context, attend_date, class_id, section_id, period_id);
+                                if (count >= i) {
+                                    try {
+                                        AllTask allTask = new AllTask();
+                                        allTask.execute(offline_date_list.get(i).getOne(), offline_date_list.get(i).getTwo(), offline_date_list.get(i).getThree(),
+                                                offline_date_list.get(i).getFour(), offline_date_list.get(i).getFive());
+                                        i++;
+                                    }catch (Exception e){
                                     }
-                                } else {
-                                    Toast.makeText(context, response.trim(), Toast.LENGTH_LONG).show();
                                 }
+                            } else {
+                                Toast.makeText(context, response.trim(), Toast.LENGTH_LONG).show();
                             }
-                        }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                    }
-                }) {
+                        }, error -> Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()) {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();

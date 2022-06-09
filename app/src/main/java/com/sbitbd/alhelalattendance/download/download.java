@@ -325,45 +325,38 @@ public class download extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, strings[2],
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                switch (strings[0]) {
-                                    case "1":
-                                        store_student(response.trim());
-                                        break;
-                                    case "2":
-                                        store_teacher(response.trim());
-                                        break;
-                                    case "3":
-                                        store_class(response.trim());
-                                        break;
-                                    case "4":
-                                        store_section(response.trim());
-                                        break;
-                                    case "5":
-                                        store_period(response.trim());
-                                        break;
-                                    default:
-                                        store_teacher_priority(response.trim());
+                        response -> {
+                            switch (strings[0]) {
+                                case "1":
+                                    store_student(response.trim());
+                                    break;
+                                case "2":
+                                    store_teacher(response.trim());
+                                    break;
+                                case "3":
+                                    store_class(response.trim());
+                                    break;
+                                case "4":
+                                    store_section(response.trim());
+                                    break;
+                                case "5":
+                                    store_period(response.trim());
+                                    break;
+                                default:
+                                    store_teacher_priority(response.trim());
 
-                                }
                             }
-                        }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(download.this);
-                        dialogBuilder.setTitle("Internet Error!");
-                        dialogBuilder.setMessage(error.toString());
-                        dialogBuilder.setCancelable(false);
-                        dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
-                            dialog.cancel();
-                            cancel(true);
-                        });
-                        dialogBuilder.show();
-                    }
-                }) {
+                        }, error -> {
+                            MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(download.this);
+                            dialogBuilder.setTitle("Internet Error!");
+                            dialogBuilder.setMessage(error.toString());
+                            dialogBuilder.setCancelable(false);
+                            dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
+                                dialog.cancel();
+                                cancel(true);
+                            });
+                            dialogBuilder.show();
+                        }) {
                     @Override
                     protected Map<String, String> getParams() {
                         Map<String, String> params = new HashMap<String, String>();
@@ -385,45 +378,42 @@ public class download extends AppCompatActivity {
 
         private void store_student(String response) {
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String id = "";
-                        String name = "";
-                        String phone = "";
-                        String father_name = "";
-                        String mother_name = "";
-                        String class_id = "";
-                        String section_id = "";
-                        String group_id = "";
-                        String roll = "";
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray result = jsonObject.getJSONArray(config.RESULT);
-                        for (int i = 0; i <= result.length(); i++) {
-                            try {
-                                JSONObject collegeData = result.getJSONObject(i);
-                                phone = collegeData.getString(config.PHONE);
-                                id = collegeData.getString(config.ID);
-                                name = collegeData.getString(config.STUDENT_NAME);
-                                father_name = collegeData.getString(config.FATHER);
-                                mother_name = collegeData.getString(config.MOTHER);
-                                class_id = collegeData.getString(config.CLASS_ID);
-                                section_id = collegeData.getString(config.SECTION_ID);
-                                group_id = collegeData.getString(config.GROUP_ID);
-                                roll = collegeData.getString(config.CLASS_ROLL);
-                                config.add_student(download.this, id, name, phone, class_id, section_id, group_id,
-                                        roll, father_name, mother_name);
-                            } catch (Exception e) {
-                            }
+            new Thread(() -> {
+                try {
+                    String id = "";
+                    String name = "";
+                    String phone = "";
+                    String father_name = "";
+                    String mother_name = "";
+                    String class_id = "";
+                    String section_id = "";
+                    String group_id = "";
+                    String roll = "";
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray result = jsonObject.getJSONArray(config.RESULT);
+                    for (int i = 0; i <= result.length(); i++) {
+                        try {
+                            JSONObject collegeData = result.getJSONObject(i);
+                            phone = collegeData.getString(config.PHONE);
+                            id = collegeData.getString(config.ID);
+                            name = collegeData.getString(config.STUDENT_NAME);
+                            father_name = collegeData.getString(config.FATHER);
+                            mother_name = collegeData.getString(config.MOTHER);
+                            class_id = collegeData.getString(config.CLASS_ID);
+                            section_id = collegeData.getString(config.SECTION_ID);
+                            group_id = collegeData.getString(config.GROUP_ID);
+                            roll = collegeData.getString(config.CLASS_ROLL);
+                            config.add_student(download.this, id, name, phone, class_id, section_id, group_id,
+                                    roll, father_name, mother_name);
+                        } catch (Exception e) {
                         }
-                        status++;
-                        if (status == 6) {
-                            startActivity(new Intent(download.this, Dashboard.class));
-                            finish();
-                        }
-                    } catch (Exception e) {
                     }
+                    status++;
+                    if (status == 6) {
+                        startActivity(new Intent(download.this, Dashboard.class));
+                        finish();
+                    }
+                } catch (Exception e) {
                 }
             }).start();
 
@@ -540,58 +530,55 @@ public class download extends AppCompatActivity {
 
         private void store_teacher_priority(String response) {
             database sqlite_db = new database(download.this);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    String user = "";
-                    String group = "";
-                    String class_id = "";
-                    String section = "";
-                    String subject = "";
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        JSONArray result = jsonObject.getJSONArray(config.RESULT);
-                        for (int i = 0; i <= result.length(); i++) {
-                            try {
-                                JSONObject collegeData = result.getJSONObject(i);
-                                user = collegeData.getString(config.ONE);
-                                class_id = collegeData.getString(config.TWO);
-                                group = collegeData.getString(config.THREE);
-                                section = collegeData.getString(config.FOUR);
-                                subject = collegeData.getString(config.FIVE);
+            new Thread(() -> {
+                String user = "";
+                String group = "";
+                String class_id = "";
+                String section = "";
+                String subject = "";
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray result = jsonObject.getJSONArray(config.RESULT);
+                    for (int i = 0; i <= result.length(); i++) {
+                        try {
+                            JSONObject collegeData = result.getJSONObject(i);
+                            user = collegeData.getString(config.ONE);
+                            class_id = collegeData.getString(config.TWO);
+                            group = collegeData.getString(config.THREE);
+                            section = collegeData.getString(config.FOUR);
+                            subject = collegeData.getString(config.FIVE);
 //                                config.add_sub_reg(download.this, id, class_id,group,subject);
 
-                                try {
-                                    ContentValues contentValues = new ContentValues();
-                                    contentValues.put("teacher_id", user);
-                                    contentValues.put("class_id", class_id);
-                                    contentValues.put("group_id", group);
-                                    contentValues.put("section_id", section);
-                                    contentValues.put("subject_name", subject);
-                                    boolean ch = sqlite_db.DataOperation(contentValues, "insert", "teacher_priority", null);
-                                    if (!ch) {
-                                        Toast.makeText(download.this, "Failed to add teacher priority", Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (Exception e) {
-                                }
-
-                            } catch (Exception e) {
-                            }
-                        }
-                        status++;
-                        if (status == 6) {
                             try {
-                                startActivity(new Intent(download.this, Dashboard.class));
-                                finish();
+                                ContentValues contentValues = new ContentValues();
+                                contentValues.put("teacher_id", user);
+                                contentValues.put("class_id", class_id);
+                                contentValues.put("group_id", group);
+                                contentValues.put("section_id", section);
+                                contentValues.put("subject_name", subject);
+                                boolean ch = sqlite_db.DataOperation(contentValues, "insert", "teacher_priority", null);
+                                if (!ch) {
+                                    Toast.makeText(download.this, "Failed to add teacher priority", Toast.LENGTH_SHORT).show();
+                                }
                             } catch (Exception e) {
                             }
-                        }
-                    } catch (Exception e) {
-                    } finally {
-                        try {
-                            sqlite_db.close();
+
                         } catch (Exception e) {
                         }
+                    }
+                    status++;
+                    if (status == 6) {
+                        try {
+                            startActivity(new Intent(download.this, Dashboard.class));
+                            finish();
+                        } catch (Exception e) {
+                        }
+                    }
+                } catch (Exception e) {
+                } finally {
+                    try {
+                        sqlite_db.close();
+                    } catch (Exception e) {
                     }
                 }
             }).start();

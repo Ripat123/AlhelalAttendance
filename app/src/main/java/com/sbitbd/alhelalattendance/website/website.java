@@ -64,19 +64,15 @@ public class website extends AppCompatActivity {
             close = findViewById(R.id.present_back);
             webView = findViewById(R.id.web);
 
-            close.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBackPressed();
-                    finish();
-                }
+            close.setOnClickListener(v -> {
+                onBackPressed();
+                finish();
             });
 
             webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             webView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
             webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
-            webView.getSettings().setAppCacheEnabled(true);
             webView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
             webSettings.setDomStorageEnabled(true);
             webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);

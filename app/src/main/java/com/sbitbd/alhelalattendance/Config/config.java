@@ -462,59 +462,56 @@ public class config {
         attend_date = config.attend_date();
         JSONObject jsonObject = new JSONObject();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    user_model user_model = User_info(context);
-                    int i = 0;
-                    Cursor cursor = sqlite_db.getUerData("SELECT * FROM attendance_temp");
-                    if (cursor.getCount() > 0) {
-                        while (cursor.moveToNext()) {
+        new Thread(() -> {
+            try {
+                user_model user_model = User_info(context);
+                int i = 0;
+                Cursor cursor = sqlite_db.getUerData("SELECT * FROM attendance_temp");
+                if (cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
 
-                            ContentValues contentValues = new ContentValues();
-                            contentValues.put("time", time);
-                            contentValues.put("date", date);
-                            contentValues.put("month", month);
-                            contentValues.put("year", year);
-                            contentValues.put("attend_date", attend_date);
-                            contentValues.put("class_id", class_id);
-                            contentValues.put("section_id", section_id);
-                            contentValues.put("period_id", period_id);
-                            contentValues.put("student_id", cursor.getString(cursor.getColumnIndexOrThrow("student_id")));
-                            contentValues.put("attendance", cursor.getString(cursor.getColumnIndexOrThrow("attendance")));
-                            contentValues.put("comment", cursor.getString(cursor.getColumnIndexOrThrow("comment")));
-                            contentValues.put("teacher_id", user_model.getId());
-                            contentValues.put("upload_status", "0");
-                            boolean ch = sqlite_db.DataOperation(contentValues, "insert", "attendance", null);
-                            if (ch) {
-                                jsonObject.put("" + i, "INSERT INTO attendance(time,date,month,year," +
-                                        "attend_date,class_id,section_id,period_id,student_id,attendance," +
-                                        "comment,teacher_id) VALUES('" + time + "','" + date + "','" + month + "'" +
-                                        ",'" + year + "','" + attend_date + "','" + class_id + "','" + section_id + "','" + period_id + "'" +
-                                        ",'" + cursor.getString(cursor.getColumnIndexOrThrow("student_id")) + "'," +
-                                        "'" + cursor.getString(cursor.getColumnIndexOrThrow("attendance")) + "'," +
-                                        "'" + cursor.getString(cursor.getColumnIndexOrThrow("comment")) + "'," +
-                                        "'" + user_model.getId() + "')");
-                                i++;
-                            } else
-                                Toast.makeText(context, "Failed to add attendance", Toast.LENGTH_SHORT).show();
-                        }
-                        if (isOnline(context))
-                            add_json(jsonObject, context, attend_date, class_id, section_id, period_id);
-                        else
-                            Toast.makeText(context, "Attendance submitted in offline!", Toast.LENGTH_SHORT).show();
+                        ContentValues contentValues = new ContentValues();
+                        contentValues.put("time", time);
+                        contentValues.put("date", date);
+                        contentValues.put("month", month);
+                        contentValues.put("year", year);
+                        contentValues.put("attend_date", attend_date);
+                        contentValues.put("class_id", class_id);
+                        contentValues.put("section_id", section_id);
+                        contentValues.put("period_id", period_id);
+                        contentValues.put("student_id", cursor.getString(cursor.getColumnIndexOrThrow("student_id")));
+                        contentValues.put("attendance", cursor.getString(cursor.getColumnIndexOrThrow("attendance")));
+                        contentValues.put("comment", cursor.getString(cursor.getColumnIndexOrThrow("comment")));
+                        contentValues.put("teacher_id", user_model.getId());
+                        contentValues.put("upload_status", "0");
+                        boolean ch = sqlite_db.DataOperation(contentValues, "insert", "attendance", null);
+                        if (ch) {
+                            jsonObject.put("" + i, "INSERT INTO attendance(time,date,month,year," +
+                                    "attend_date,class_id,section_id,period_id,student_id,attendance," +
+                                    "comment,teacher_id) VALUES('" + time + "','" + date + "','" + month + "'" +
+                                    ",'" + year + "','" + attend_date + "','" + class_id + "','" + section_id + "','" + period_id + "'" +
+                                    ",'" + cursor.getString(cursor.getColumnIndexOrThrow("student_id")) + "'," +
+                                    "'" + cursor.getString(cursor.getColumnIndexOrThrow("attendance")) + "'," +
+                                    "'" + cursor.getString(cursor.getColumnIndexOrThrow("comment")) + "'," +
+                                    "'" + user_model.getId() + "')");
+                            i++;
+                        } else
+                            Toast.makeText(context, "Failed to add attendance", Toast.LENGTH_SHORT).show();
                     }
-
-                } catch (Exception e) {
-                } finally {
-                    try {
-                        sqlite_db.close();
-                    } catch (Exception e) {
-                    }
+                    if (isOnline(context))
+                        add_json(jsonObject, context, attend_date, class_id, section_id, period_id);
+                    else
+                        Toast.makeText(context, "Attendance submitted in offline!", Toast.LENGTH_SHORT).show();
                 }
 
+            } catch (Exception e) {
+            } finally {
+                try {
+                    sqlite_db.close();
+                } catch (Exception e) {
+                }
             }
+
         }).start();
 
     }
@@ -568,23 +565,14 @@ public class config {
                           String section_id, String period_id) {
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.ADD_ONLINE,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            if (response.trim().equals("")) {
-                                Toast.makeText(context, "Attendance Uploaded Successful!", Toast.LENGTH_LONG).show();
-                                update_online_status(context, attend_date, class_id, section_id, period_id);
-                            } else {
-                                Toast.makeText(context, response.trim(), Toast.LENGTH_LONG).show();
-                            }
+                    response -> {
+                        if (response.trim().equals("")) {
+                            Toast.makeText(context, "Attendance Uploaded Successful!", Toast.LENGTH_LONG).show();
+                            update_online_status(context, attend_date, class_id, section_id, period_id);
+                        } else {
+                            Toast.makeText(context, response.trim(), Toast.LENGTH_LONG).show();
                         }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    }, error -> Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
@@ -607,29 +595,22 @@ public class config {
 
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.ADD_ONLINE,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            progressDialog.dismiss();
-                            if (response.trim().equals("")) {
+                    response -> {
+                        progressDialog.dismiss();
+                        if (response.trim().equals("")) {
 
-                                Toast.makeText(context, "Submitted", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(context, Dashboard.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                context.startActivity(intent);
+                            Toast.makeText(context, "Submitted", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(context, Dashboard.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            context.startActivity(intent);
 
-                            } else {
-                                Toast.makeText(context, response.trim(), Toast.LENGTH_LONG).show();
-                            }
+                        } else {
+                            Toast.makeText(context, response.trim(), Toast.LENGTH_LONG).show();
                         }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    progressDialog.dismiss();
-                    Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    }, error -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                    }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
@@ -887,26 +868,19 @@ public class config {
             ProgressDialog progressDialog = ProgressDialog.show(context,"","Loading...",false,false);
             String sql = "SELECT * FROM teacher_attend where attend_date = '"+attend_date()+"'";
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.GET_ID,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
+                    response -> {
 
-                            if (response.trim().equals("")) {
-                                addteacher_json(jsonObject,context,progressDialog);
+                        if (response.trim().equals("")) {
+                            addteacher_json(jsonObject,context,progressDialog);
 
-                            } else {
-                                progressDialog.dismiss();
-                                Toast.makeText(context, "Teacher Attendance Already Started!", Toast.LENGTH_SHORT).show();
-                            }
+                        } else {
+                            progressDialog.dismiss();
+                            Toast.makeText(context, "Teacher Attendance Already Started!", Toast.LENGTH_SHORT).show();
                         }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    progressDialog.dismiss();
-                    Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    }, error -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                    }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
@@ -929,25 +903,18 @@ public class config {
 
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.INSERT,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            progressDialog.dismiss();
-                            if (response.trim().equals("")) {
-                                Toast.makeText(context, "Submitted", Toast.LENGTH_SHORT).show();
+                    response -> {
+                        progressDialog.dismiss();
+                        if (response.trim().equals("")) {
+                            Toast.makeText(context, "Submitted", Toast.LENGTH_SHORT).show();
 
-                            } else {
-                                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-                            }
+                        } else {
+                            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
                         }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    progressDialog.dismiss();
-                    Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    }, error -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                    }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
@@ -970,27 +937,20 @@ public class config {
 
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.GET_ID,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
+                    response -> {
 
-                            if (response.trim().equals("")) {
-                                teacherLiveUpdate(context,"INSERT INTO teacher_gap_time (teacher_id," +
-                                        "start_time,attend_date)VALUES('"+id+"',current_time,'"+attend_date()+"')",progressDialog);
+                        if (response.trim().equals("")) {
+                            teacherLiveUpdate(context,"INSERT INTO teacher_gap_time (teacher_id," +
+                                    "start_time,attend_date)VALUES('"+id+"',current_time,'"+attend_date()+"')",progressDialog);
 
-                            } else {
-                                progressDialog.dismiss();
-                                Toast.makeText(context, "Gap time Already Started!", Toast.LENGTH_SHORT).show();
-                            }
+                        } else {
+                            progressDialog.dismiss();
+                            Toast.makeText(context, "Gap time Already Started!", Toast.LENGTH_SHORT).show();
                         }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    progressDialog.dismiss();
-                    Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    }, error -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
+                    }) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
@@ -1012,25 +972,16 @@ public class config {
     public void teacher_admin_check(Context context,String sql) {
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.POST, config.ADMIN_VERIFY,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            if (!response.trim().equals("")) {
-                                updateAdmin_status(context,response.trim());
-                                Intent intent =new Intent(context, download.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                context.startActivity(intent);
-                            } else {
-                                Toast.makeText(context, "Admin Checking Failed", Toast.LENGTH_SHORT).show();
-                            }
+                    response -> {
+                        if (!response.trim().equals("")) {
+                            updateAdmin_status(context,response.trim());
+                            Intent intent =new Intent(context, download.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            context.startActivity(intent);
+                        } else {
+                            Toast.makeText(context, "Admin Checking Failed", Toast.LENGTH_SHORT).show();
                         }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }) {
+                    }, error -> Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show()) {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();

@@ -64,6 +64,8 @@ public class Dashboard extends BaseCallActivity {
     private String class_id, section_id, period_id;
     private dashboard_controller dashboard_controller = new dashboard_controller();
     private static final int PERMISSION_REQ_FORWARD = 1 << 4;
+    private NavigationView navigationView;
+    private FloatingActionButton fab;
 
     // Permission request when we want to stay in
     // current activity even if all permissions are granted.
@@ -83,105 +85,96 @@ public class Dashboard extends BaseCallActivity {
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                View view1 = LayoutInflater.from(Dashboard.this).inflate(R.layout.textfield4, null);
-                AutoCompleteTextView class_s = view1.findViewById(R.id.class_s);
-                AutoCompleteTextView section = view1.findViewById(R.id.section_s);
-                AutoCompleteTextView period = view1.findViewById(R.id.period_s);
 
-                get_class(Dashboard.this);
-                ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(Dashboard.this,
-                        R.layout.item_name, class_name);
-                class_s.setAdapter(dataAdapter);
-                class_s.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        class_model class_model = class_list.get(position);
-                        class_id = class_model.getId();
-                        get_section(Dashboard.this, class_model.getId());
-                        ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(Dashboard.this,
-                                R.layout.item_name, section_name);
-                        section.setAdapter(dataAdapter1);
-                        section.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                four_model four_model = section_list.get(position);
-                                section_id = four_model.getOne();
-                                get_period(Dashboard.this, four_model.getOne());
-                                ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(Dashboard.this,
-                                        R.layout.item_name, period_name);
-                                period.setAdapter(dataAdapter2);
-                                period.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                    @Override
-                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                        four_model four_model1 = period_list.get(position);
-                                        period_id = four_model1.getOne();
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-
-
-                MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(Dashboard.this,R.style.RoundShapeTheme);
-                dialogBuilder.setTitle("Selection Required");
-                dialogBuilder.setView(view1);
-                dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
-
-                    dialog.cancel();
-                });
-                dialogBuilder.setPositiveButton("OK", (dialog, which) -> {
-                    if (class_s.getText().toString().equals("")) {
-                        Toast.makeText(Dashboard.this, "Please Select a Class", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (section.getText().toString().equals("")) {
-                        Toast.makeText(Dashboard.this, "Please Select a Section", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    if (period.getText().toString().equals("")) {
-                        Toast.makeText(Dashboard.this, "Please Select a Period", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    initAttend(view);
-                });
-                dialogBuilder.show();
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_all_student, R.id.nav_website,
                 R.id.nav_offline,R.id.nav_online,R.id.nav_teacher_gap,R.id.nav_teacher)
-                .setDrawerLayout(drawer)
+                .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
+//        check_offline_data_upload();
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            View view1 = LayoutInflater.from(Dashboard.this).inflate(R.layout.textfield4, null);
+            AutoCompleteTextView class_s = view1.findViewById(R.id.class_s);
+            AutoCompleteTextView section = view1.findViewById(R.id.section_s);
+            AutoCompleteTextView period = view1.findViewById(R.id.period_s);
+
+            get_class(Dashboard.this);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(Dashboard.this,
+                    R.layout.item_name, class_name);
+            class_s.setAdapter(dataAdapter);
+            class_s.setOnItemClickListener((parent, view2, position, id) -> {
+                class_model class_model = class_list.get(position);
+                class_id = class_model.getId();
+                get_section(Dashboard.this, class_model.getId());
+                ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(Dashboard.this,
+                        R.layout.item_name, section_name);
+                section.setAdapter(dataAdapter1);
+                section.setOnItemClickListener((parent1, view21, position1, id1) -> {
+                    four_model four_model = section_list.get(position1);
+                    section_id = four_model.getOne();
+                    get_period(Dashboard.this, four_model.getOne());
+                    ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(Dashboard.this,
+                            R.layout.item_name, period_name);
+                    period.setAdapter(dataAdapter2);
+                    period.setOnItemClickListener((parent11, view211, position11, id11) -> {
+                        four_model four_model1 = period_list.get(position11);
+                        period_id = four_model1.getOne();
+                    });
+                });
+            });
+
+            MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(Dashboard.this,R.style.RoundShapeTheme);
+            dialogBuilder.setTitle("Selection Required");
+            dialogBuilder.setView(view1);
+            dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
+
+                dialog.cancel();
+            });
+            dialogBuilder.setPositiveButton("OK", (dialog, which) -> {
+                if (class_s.getText().toString().equals("")) {
+                    Toast.makeText(Dashboard.this, "Please Select a Class", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (section.getText().toString().equals("")) {
+                    Toast.makeText(Dashboard.this, "Please Select a Section", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (period.getText().toString().equals("")) {
+                    Toast.makeText(Dashboard.this, "Please Select a Period", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                initAttend(view);
+            });
+            dialogBuilder.show();
+        });
+
         web = navigationView.getMenu().findItem(R.id.nav_website);
         online = navigationView.getMenu().findItem(R.id.nav_online);
         teacher = navigationView.getMenu().findItem(R.id.nav_teacher);
         teacher_gap = navigationView.getMenu().findItem(R.id.nav_teacher_gap);
-        web.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                startActivity(new Intent(Dashboard.this, website.class));
-                return true;
-            }
+        web.setOnMenuItemClickListener(item -> {
+            startActivity(new Intent(Dashboard.this, website.class));
+            return true;
         });
-        online.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                startActivity(new Intent(Dashboard.this, update_attendance.class));
-                return true;
-            }
+        online.setOnMenuItemClickListener(item -> {
+            startActivity(new Intent(Dashboard.this, update_attendance.class));
+            return true;
         });
         user_model user_model = config.User_info(Dashboard.this);
         if (user_model.getStatus() == null || user_model.getStatus().equals("0") || user_model.getStatus().equals("")){
@@ -189,58 +182,47 @@ public class Dashboard extends BaseCallActivity {
             teacher_gap.setVisible(false);
         }
         checkPermissions();
-//        check_offline_data_upload();
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.dashboard, menu);
-        menu.getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                startActivity(new Intent(Dashboard.this, settings.class));
-                return true;
-            }
+        menu.getItem(0).setOnMenuItemClickListener(item -> {
+            startActivity(new Intent(Dashboard.this, settings.class));
+            return true;
         });
-        menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(Dashboard.this,R.style.RoundShapeTheme);
-                dialogBuilder.setTitle("Confirmation");
-                dialogBuilder.setMessage("Are you Sure you want to Log Out?");
+        menu.getItem(1).setOnMenuItemClickListener(item -> {
+            MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(Dashboard.this,R.style.RoundShapeTheme);
+            dialogBuilder.setTitle("Confirmation");
+            dialogBuilder.setMessage("Are you Sure you want to Log Out?");
 
-                dialogBuilder.setNegativeButton("No", (dialog, which) -> {
+            dialogBuilder.setNegativeButton("No", (dialog, which) -> {
 
-                    dialog.cancel();
-                });
-                dialogBuilder.setPositiveButton("Yes", (dialog, which) -> {
-                    config.deleteuser(Dashboard.this);
-                    startActivity(new Intent(Dashboard.this, MainActivity.class));
-                    finish();
-                });
-                dialogBuilder.show();
-                return true;
-            }
+                dialog.cancel();
+            });
+            dialogBuilder.setPositiveButton("Yes", (dialog, which) -> {
+                config.deleteuser(Dashboard.this);
+                startActivity(new Intent(Dashboard.this, MainActivity.class));
+                finish();
+            });
+            dialogBuilder.show();
+            return true;
         });
-        menu.getItem(2).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(Dashboard.this,R.style.RoundShapeTheme);
-                dialogBuilder.setTitle("Confirmation");
-                dialogBuilder.setMessage("Are you Sure you want to exit?");
+        menu.getItem(2).setOnMenuItemClickListener(item -> {
+            MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(Dashboard.this,R.style.RoundShapeTheme);
+            dialogBuilder.setTitle("Confirmation");
+            dialogBuilder.setMessage("Are you Sure you want to exit?");
 
-                dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
+            dialogBuilder.setNegativeButton("Cancel", (dialog, which) -> {
 
-                    dialog.cancel();
-                });
-                dialogBuilder.setPositiveButton("exit", (dialog, which) -> {
-                    System.exit(1);
-                });
-                dialogBuilder.show();
-                return true;
-            }
+                dialog.cancel();
+            });
+            dialogBuilder.setPositiveButton("exit", (dialog, which) -> {
+                System.exit(1);
+            });
+            dialogBuilder.show();
+            return true;
         });
         return true;
     }

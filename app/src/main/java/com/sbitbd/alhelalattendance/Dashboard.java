@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -266,6 +267,9 @@ public class Dashboard extends BaseCallActivity {
             section_list.clear();
             section_name.clear();
             Cursor cursor = sqliteDB.getUerData("SELECT * FROM section where class_id = '" + class_id + "' " +
+                    " and id in (select section_id from teacher_priority where " +
+                    "teacher_id = '"+config.User_info(context).getId()+"' and class_id = '"+class_id+"')");
+            Log.d("ttt","SELECT * FROM section where class_id = '" + class_id + "' " +
                     " and id in (select section_id from teacher_priority where " +
                     "teacher_id = '"+config.User_info(context).getId()+"' and class_id = '"+class_id+"')");
             if (cursor.getCount() > 0) {

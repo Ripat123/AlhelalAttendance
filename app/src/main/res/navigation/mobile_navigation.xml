@@ -7,40 +7,40 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.sbitbd.alhelalattendance.ui.home.HomeFragment"
+        android:name="com.sbitbd.alhelalacademy.ui.home.HomeFragment"
         android:label="@string/dashboard"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.sbitbd.alhelalattendance.ui.gallery.GalleryFragment"
+        android:name="com.sbitbd.alhelalacademy.ui.gallery.GalleryFragment"
         android:label="@string/present_student"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.sbitbd.alhelalattendance.ui.slideshow.SlideshowFragment"
+        android:name="com.sbitbd.alhelalacademy.ui.slideshow.SlideshowFragment"
         android:label="@string/absent_student"
         tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/nav_all_student"
-        android:name="com.sbitbd.alhelalattendance.ui.all_student.all_student"
+        android:name="com.sbitbd.alhelalacademy.ui.all_student.all_student"
         android:label="@string/view_all_students"
         tools:layout="@layout/fragment_all_student" />
     <fragment
         android:id="@+id/nav_offline"
-        android:name="com.sbitbd.alhelalattendance.ui.offline_attend.offline_attend"
+        android:name="com.sbitbd.alhelalacademy.ui.offline_attend.offline_attend"
         android:label="@string/offline_attend"
         tools:layout="@layout/fragment_offline_attend" />
     <fragment
         android:id="@+id/nav_teacher"
-        android:name="com.sbitbd.alhelalattendance.ui.teacher_atd.teacher_attend"
+        android:name="com.sbitbd.alhelalacademy.ui.teacher_atd.teacher_attend"
         android:label="@string/teacher_attendance"
         tools:layout="@layout/fragment_teacher_attend" />
     <fragment
         android:id="@+id/nav_teacher_gap"
-        android:name="com.sbitbd.alhelalattendance.ui.teacher_gap.teacher_gap"
+        android:name="com.sbitbd.alhelalacademy.ui.teacher_gap.teacher_gap"
         android:label="@string/teacher_gap"
         tools:layout="@layout/fragment_teacher_gap" />
 </navigation>

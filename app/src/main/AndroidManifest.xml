@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sbitbd.alhelalattendance">
+    package="com.sbitbd.alhelalacademy">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,7 +17,7 @@
     <uses-feature android:name="android.hardware.camera" />
 
     <application
-        android:name=".connectionservice.OpenDuoApplication"
+        android:name="com.sbitbd.alhelalacademy.connectionservice.OpenDuoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_foreground"
         android:label="@string/app_name"
@@ -26,64 +26,64 @@
         android:theme="@style/Theme.AlhelalAttendance.NoActionBar.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.video_call.video_call"
+            android:name="com.sbitbd.alhelalacademy.ui.video_call.video_call"
             android:exported="false" />
         <activity
-            android:name=".ui.audio_call.audio_call"
+            android:name="com.sbitbd.alhelalacademy.ui.audio_call.audio_call"
             android:exported="false" />
-        <activity android:name=".activity.CallActivity"
+        <activity android:name="com.sbitbd.alhelalacademy.activity.CallActivity"
             android:exported="true"/>
         <activity
-            android:name=".update_view.update_view"
+            android:name="com.sbitbd.alhelalacademy.update_view.update_view"
             android:exported="false"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".teacher_page.teacher_page"
+            android:name="com.sbitbd.alhelalacademy.teacher_page.teacher_page"
             android:exported="true"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".verification.verify"
+            android:name="com.sbitbd.alhelalacademy.verification.verify"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".teacher_attendance.teacher_attend"
+            android:name="com.sbitbd.alhelalacademy.teacher_attendance.teacher_attend"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
-        <activity android:name=".ui.update_attendance.update_attendance" />
+        <activity android:name="com.sbitbd.alhelalacademy.ui.update_attendance.update_attendance" />
         <activity
-            android:name=".settings.settings"
+            android:name="com.sbitbd.alhelalacademy.settings.settings"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".download.download"
+            android:name="com.sbitbd.alhelalacademy.download.download"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar.NoActionBar" />
         <activity
-            android:name=".website.website"
+            android:name="com.sbitbd.alhelalacademy.website.website"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".forget.forget_code"
+            android:name="com.sbitbd.alhelalacademy.forget.forget_code"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".registration.registration"
+            android:name="com.sbitbd.alhelalacademy.registration.registration"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar.NoActionBar" />
         <activity
-            android:name=".class_view.class_view"
+            android:name="com.sbitbd.alhelalacademy.class_view.class_view"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".absent_view.absent_view"
+            android:name="com.sbitbd.alhelalacademy.absent_view.absent_view"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".present_view.present_view"
+            android:name="com.sbitbd.alhelalacademy.present_view.present_view"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".student_details"
+            android:name="com.sbitbd.alhelalacademy.student_details"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".attend_form.attend"
+            android:name="com.sbitbd.alhelalacademy.attend_form.attend"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".Dashboard"
+            android:name="com.sbitbd.alhelalacademy.Dashboard"
             android:label="@string/title_activity_dashboard"
             android:theme="@style/Theme.AlhelalAttendance.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.sbitbd.alhelalacademy.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -92,7 +92,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".connectionservice.OpenDuoConnectionService"
+            android:name="com.sbitbd.alhelalacademy.connectionservice.OpenDuoConnectionService"
             android:exported="false"
             android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE">
             <intent-filter>
@@ -100,7 +100,7 @@
             </intent-filter>
         </service>
         <receiver
-            android:name=".connectionservice.OpenDuoCallReceiver"
+            android:name="com.sbitbd.alhelalacademy.connectionservice.OpenDuoCallReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
@@ -114,7 +114,7 @@
         <!-- <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/> -->
         <!-- </intent-filter> -->
         <!-- </receiver> -->
-        <service android:name=".Service.attend_view_service" />
+        <service android:name="com.sbitbd.alhelalacademy.Service.attend_view_service" />
 
         <meta-data
             android:name="preloaded_fonts"
